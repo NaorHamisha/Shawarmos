@@ -29,6 +29,7 @@ public class ShawarmaListFragment extends Fragment {
     ShawarmaRecyclerAdapter adapter;
     ShawarmaListViewModel viewModel;
 
+    List<ReviewModel> data;
     RecyclerView recyclerView;
 
     @Override
@@ -44,14 +45,14 @@ public class ShawarmaListFragment extends Fragment {
 //        adapter = new ShawarmaRecyclerAdapter(getLayoutInflater(), viewModel.getData().getValue());
 
         // Here i think i get the data fri
-         List<ReviewModel> data = Arrays.asList(
+        data = Arrays.asList(
                 new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
-                new ReviewModel("sdfsdfsd","hrerere"),   new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
-                new ReviewModel("sdfsdfsd","hrerere"),   new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
-                new ReviewModel("sdfsdfsd","hrerere"),   new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
-                new ReviewModel("sdfsdfsd","hrerere"),   new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
-                new ReviewModel("sdfsdfsd","hrerere"),   new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
-                new ReviewModel("sdfsdfsd","hrerere"),   new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
+                new ReviewModel("sdfsdfsd","hrerere"), new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
+                new ReviewModel("sdfsdfsd","hrerere"), new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
+                new ReviewModel("sdfsdfsd","hrerere"), new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
+                new ReviewModel("sdfsdfsd","hrerere"), new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
+                new ReviewModel("sdfsdfsd","hrerere"), new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
+                new ReviewModel("sdfsdfsd","hrerere"), new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
                 new ReviewModel("sdfsdfsd","hrerere"),
                 new ReviewModel("ehta","sdfsdfsdfsdfsdf"));
 
@@ -62,9 +63,10 @@ public class ShawarmaListFragment extends Fragment {
             @Override
             public void onItemClick(int pos) {
                 Log.d("TAG", "Row was clicked " + pos);
-//                Student st = viewModel.getData().getValue().get(pos);
-//                StudentsListFragmentDirections.ActionStudentsListFragmentToBlueFragment action = StudentsListFragmentDirections.actionStudentsListFragmentToBlueFragment(st.name);
-//                Navigation.findNavController(view).navigate(action);
+//                ReviewModel review = viewModel.getData().get(pos);
+                ReviewModel review = data.get(pos);
+
+                Navigation.findNavController(view).navigate(ShawarmaListFragmentDirections.actionShawarmaListFragmentToReviewPageFragment());
             }
         });
 

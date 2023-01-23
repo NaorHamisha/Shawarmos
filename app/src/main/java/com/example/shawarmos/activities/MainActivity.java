@@ -22,19 +22,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ShawarmaListFragment myFrag = new ShawarmaListFragment();
+        // Log in before the app is opening
 
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction tran = manager.beginTransaction();
-        tran.add(R.id.main_frag_container, myFrag);
-        tran.commit();
+        NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.main_navhost);
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupActionBarWithNavController(this,navController);
 
-
-//        NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.main_navhost);
-//        navController = navHostFragment.getNavController();
-//        NavigationUI.setupActionBarWithNavController(this,navController);
-//
-//        BottomNavigationView navView = findViewById(R.id.main_bottomNavigationView);
-//        NavigationUI.setupWithNavController(navView,navController);
+        BottomNavigationView navView = findViewById(R.id.main_bottomNavigationView);
+        NavigationUI.setupWithNavController(navView, navController);
     }
 }

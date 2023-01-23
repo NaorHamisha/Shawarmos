@@ -20,26 +20,45 @@
 
     <TextView
         android:id="@+id/reviewlistrow_name_tv"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
         android:text="TextView"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/reviewlistrow_id_tv"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/reviewlistrow_avatar_img"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/reviewlistrow_id_tv"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="14dp"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reviewlistrow_avatar_img"
+        app:layout_constraintStart_toStartOf="@+id/reviewlistrow_name_tv" />
+
+    <RatingBar
+        android:id="@+id/reviewlistrow_rank_rb"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:elevation="4dp"
+        android:isIndicator="true"
+        android:maxHeight="30dp"
+        android:minWidth="10dp"
+        android:minHeight="15dp"
+        android:numStars="5"
+        android:rating="3.3"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:theme="@style/RatingBar"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        app:layout_constraintStart_toStartOf="@+id/reviewlistrow_name_tv"
         app:layout_constraintTop_toBottomOf="@+id/reviewlistrow_name_tv" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
