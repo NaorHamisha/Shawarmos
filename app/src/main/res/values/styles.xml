@@ -4,4 +4,6 @@
         <item name="colorControlNormal">@color/lightGrey</item>
         <item name="colorControlActivated">@color/duskYellow</item>
     </style>
+    <style name="check" parent="TextAppearance.AppCompat.Title" >
+    </style>
 </resources>
