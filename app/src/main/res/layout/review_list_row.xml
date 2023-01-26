@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="@+id/reviewlistrow_name_tv" />
 
     <RatingBar
-        android:id="@+id/reviewlistrow_rank_rb"
+        android:id="@+id/review_page_fragment_rank_rb"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

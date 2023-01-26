@@ -1,12 +1,8 @@
 package com.example.shawarmos.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,31 +16,34 @@ import android.view.ViewGroup;
 import com.example.shawarmos.R;
 import com.example.shawarmos.ShawarmaListViewModel;
 import com.example.shawarmos.ShawarmaRecyclerAdapter;
+import com.example.shawarmos.databinding.FragmentShawarmaListBinding;
 import com.example.shawarmos.models.ReviewModel;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 public class ShawarmaListFragment extends Fragment {
-    ShawarmaRecyclerAdapter adapter;
-    ShawarmaListViewModel viewModel;
 
+    private FragmentShawarmaListBinding binding;
+    private ShawarmaRecyclerAdapter adapter;
+    private ShawarmaListViewModel viewModel;
+
+    // TODO connect it to an db class
     List<ReviewModel> data;
-    RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shawarma_list, container, false);
+        binding = FragmentShawarmaListBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        recyclerView = view.findViewById(R.id.reviewsList_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.reviewsListRv.setHasFixedSize(true);
+        binding.reviewsListRv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-//        adapter = new ShawarmaRecyclerAdapter(getLayoutInflater(), viewModel.getData().getValue());
+        //        adapter = new ShawarmaRecyclerAdapter(getLayoutInflater(), viewModel.getData().getValue());
 
-        // Here i think i get the data fri
         data = Arrays.asList(
                 new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
                 new ReviewModel("sdfsdfsd","hrerere"), new ReviewModel("dsfsdfsdf","sdfsdfsdf"),
@@ -57,7 +56,7 @@ public class ShawarmaListFragment extends Fragment {
                 new ReviewModel("ehta","sdfsdfsdfsdfsdf"));
 
         adapter = new ShawarmaRecyclerAdapter(getLayoutInflater(), data);
-        recyclerView.setAdapter(adapter);
+        binding.reviewsListRv.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new ShawarmaRecyclerAdapter.OnItemClickListener() {
             @Override
@@ -66,7 +65,9 @@ public class ShawarmaListFragment extends Fragment {
 //                ReviewModel review = viewModel.getData().get(pos);
                 ReviewModel review = data.get(pos);
 
-                Navigation.findNavController(view).navigate(ShawarmaListFragmentDirections.actionShawarmaListFragmentToReviewPageFragment());
+                NavDirections directions = ShawarmaListFragmentDirections.actionShawarmaListFragmentToReviewPageFragment(review);
+
+                Navigation.findNavController(view).navigate(directions);
             }
         });
 

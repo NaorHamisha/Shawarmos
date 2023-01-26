@@ -7,7 +7,7 @@
     tools:context=".fragments.ReviewPageFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/review_page_fragment_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -20,21 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:text=" a lot of text here its should be wriiten all the time beacuse i hate to talk about drugs and all that things"
-        app:layout_constraintBottom_toTopOf="@+id/reviewlistrow_rank_rb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/review_page_fragment_author_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -43,16 +29,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/review_page_fragment_img"
+        android:layout_width="0dp"
+        android:layout_height="146dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_page_fragment_title_tv"
+        app:srcCompat="@drawable/avatar" />
+
     <RatingBar
-        android:id="@+id/reviewlistrow_rank_rb"
+        android:id="@+id/review_page_fragment_rank_rb"
         style="@style/RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:numStars="5"
+        android:isIndicator="true"
         android:theme="@style/RatingBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/review_page_fragment_img" />
+
+    <TextView
+        android:id="@+id/review_page_fragment_decription_tv"
+        android:layout_width="390dp"
+        android:layout_height="343dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text=" a lot of text here its should be wriiten all the time beacuse i hate to talk about drugs and all that things check dfjsk ldfjlksdjflkdsjflj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_page_fragment_rank_rb" />
 
 </androidx.constraintlayout.widget.ConstraintLayout >
