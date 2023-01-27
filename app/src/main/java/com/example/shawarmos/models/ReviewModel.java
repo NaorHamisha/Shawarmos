@@ -1,10 +1,17 @@
 package com.example.shawarmos.models;
 
+import android.media.Image;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
 
 @Entity
 public class ReviewModel implements Serializable {
@@ -18,10 +25,50 @@ public class ReviewModel implements Serializable {
     public String author;
     public String imageUrl;
 
-    public ReviewModel(String title, String description) {
+    static final String TITLE = "title";
+    static final String ID = "reviewId";
+    static final String IMAGE = "imageUrl";
+    static final String RATING = "rating";
+    public static final String COLLECTION = "reviews";
+    static final String LAST_UPDATED = "lastUpdated";
+
+    public ReviewModel(String title, String description, float rating) {
         this.title = title;
         this.description = description;
-        this.rating = (float)2.1;
+        this.rating = rating;
+    }
+
+    public static ReviewModel fromJson(Map<String,Object> json){
+        String reviewId = (String)json.get(ID);
+        String title = (String)json.get(TITLE);
+        String imageUrl = (String)json.get(IMAGE);
+        float rating = (float)json.get(RATING);
+
+        ReviewModel review = new ReviewModel(reviewId, title, rating);
+
+        try {
+            Timestamp time = (Timestamp) json.get(LAST_UPDATED);
+            //review.setLastUpdated(time.getSeconds());
+        } catch(Exception e) {
+
+        }
+
+        return review;
+    }
+
+    public Map<String,Object> toJson(){
+        Map<String, Object> json = new HashMap<>();
+        json.put(ID, getReviewId());
+        json.put(TITLE, getTitle());
+        json.put(IMAGE, getImageUrl());
+        json.put(RATING, getRating());
+        json.put(LAST_UPDATED, FieldValue.serverTimestamp());
+
+        return json;
+    }
+
+    public ReviewModel(String title, String description) {
+        this(title, description, (float)2);
     }
 
     @NonNull
