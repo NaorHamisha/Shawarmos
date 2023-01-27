@@ -28,11 +28,11 @@
     <fragment
         android:id="@+id/addReviewFragment"
         android:name="com.example.shawarmos.fragments.AddReviewFragment"
-        android:label="fragment_add_review"
+        android:label="Add Review"
         tools:layout="@layout/fragment_add_review" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.shawarmos.fragments.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="My Profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

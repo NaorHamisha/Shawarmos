@@ -61,7 +61,6 @@ public class ShawarmaListFragment extends Fragment {
         adapter.setOnItemClickListener(new ShawarmaRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-                Log.d("TAG", "Row was clicked " + pos);
 //                ReviewModel review = viewModel.getData().get(pos);
                 ReviewModel review = data.get(pos);
 
