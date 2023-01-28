@@ -13,9 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.shawarmos.R;
-import com.example.shawarmos.fragments.LoginFragment;
-import com.example.shawarmos.fragments.ShawarmaListFragment;
-import com.example.shawarmos.models.Meal;
+ import com.example.shawarmos.models.Meal;
 import com.example.shawarmos.models.MealModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
