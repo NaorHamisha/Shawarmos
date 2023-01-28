@@ -17,6 +17,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class Model {
+
     private static final Model _instance = new Model();
 
     private Executor executor = Executors.newSingleThreadExecutor();
@@ -26,8 +27,14 @@ public class Model {
     public static Model instance(){
         return _instance;
     }
-    private Model(){
+    private Model(){}
+
+
+
+    public void logIn() {
+
     }
+
     public void addReview(Review review, Listener<Void> listener) {
         firebaseModel.addReview(review, (Void)->{
             refreshAllStudents();
@@ -79,5 +86,6 @@ public class Model {
         LOADING,
         NOT_LOADING
     }
+
     final public MutableLiveData<LoadingState> EventReviewsListLoadingState = new MutableLiveData<LoadingState>(LoadingState.NOT_LOADING);
 }
