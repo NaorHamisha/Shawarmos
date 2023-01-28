@@ -23,7 +23,7 @@
         tools:layout="@layout/fragment_review_page">
         <argument
             android:name="review"
-            app:argType="com.example.shawarmos.models.ReviewModel" />
+            app:argType="com.example.shawarmos.models.Review" />
     </fragment>
     <fragment
         android:id="@+id/addReviewFragment"

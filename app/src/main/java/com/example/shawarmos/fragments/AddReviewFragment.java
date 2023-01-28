@@ -26,7 +26,9 @@ import android.view.ViewGroup;
 import com.example.shawarmos.DAL.Model;
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentAddReviewBinding;
-import com.example.shawarmos.models.ReviewModel;
+import com.example.shawarmos.models.Review;
+
+import java.util.UUID;
 
 public class AddReviewFragment extends Fragment {
 
@@ -56,7 +58,6 @@ public class AddReviewFragment extends Fragment {
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), new ActivityResultCallback<Bitmap>() {
             @Override
             public void onActivityResult(Bitmap result) {
-
                 if (result != null) {
                     binding.addReviewFragmentImg.setImageBitmap(result);
                     isAvatarSelected = true;
@@ -83,19 +84,20 @@ public class AddReviewFragment extends Fragment {
         View view = binding.getRoot();
 
         binding.addReviewFragmentSaveBtn.setOnClickListener(view1 -> {
-            // TODO: Check if the variables have values
-            String name = binding.addReviewFragmentNameEt.getText().toString();
-            String description = binding.addReviewFragmentDescriptionEt.getText().toString();
-            float rank = binding.addReviewFragmentRankRb.getRating();
 
-            ReviewModel review  = new ReviewModel(name, description, rank);
+            String title = binding.addReviewFragmentNameEt.getText().toString();
+            String description = binding.addReviewFragmentDescriptionEt.getText().toString();
+            double rank = binding.addReviewFragmentRankRb.getRating();
+
+            UUID uuid = UUID.randomUUID();
+            Review review  = new Review(uuid.toString(), title, description, rank, "Naor Hamisha", "");
 
             if (isAvatarSelected) {
                 binding.addReviewFragmentImg.setDrawingCacheEnabled(true);
                 binding.addReviewFragmentImg.buildDrawingCache();
                 Bitmap bitmap = ((BitmapDrawable) binding.addReviewFragmentImg.getDrawable()).getBitmap();
 
-                Model.instance().uploadImage(name, bitmap, url->{
+                Model.instance().uploadImage(title, bitmap, url->{
                     if (url != null){
                         review.setImageUrl(url);
                     }
@@ -103,12 +105,11 @@ public class AddReviewFragment extends Fragment {
                         Navigation.findNavController(view1).popBackStack();
                     });
                 });
+            } else {
+                Model.instance().addReview(review, (unused) -> {
+                    Navigation.findNavController(view1).popBackStack();
+                });
             }
-//            else {
-//                Model.instance().addReview(review, (unused) -> {
-//                    Navigation.findNavController(view1).popBackStack();
-//                });
-//            }
         });
 
         binding.addReviewFragmentCancelBtn.setOnClickListener(view1 -> Navigation.findNavController(view1).popBackStack(R.id.shawarmaListFragment,false));

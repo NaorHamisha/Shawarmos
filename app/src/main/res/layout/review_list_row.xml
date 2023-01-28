@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/reviewlistrow_id_tv"
+        android:id="@+id/reviewlistrow_author_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="@+id/reviewlistrow_name_tv" />
 
     <RatingBar
-        android:id="@+id/review_page_fragment_rank_rb"
+        android:id="@+id/reviewlistrow_rating_rb"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

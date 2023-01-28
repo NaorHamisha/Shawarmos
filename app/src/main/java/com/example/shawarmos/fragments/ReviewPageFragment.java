@@ -12,7 +12,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.shawarmos.R;
-import com.example.shawarmos.models.ReviewModel;
+import com.example.shawarmos.models.Review;
+import com.squareup.picasso.Picasso;
 
 
 public class ReviewPageFragment extends Fragment {
@@ -23,20 +24,25 @@ public class ReviewPageFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_review_page, container, false);
 
-        TextView description = view.findViewById(R.id.review_page_fragment_decription_tv);
+        TextView description = view.findViewById(R.id.review_page_fragment_description_tv);
         TextView title = view.findViewById(R.id.review_page_fragment_title_tv);
         TextView author = view.findViewById(R.id.review_page_fragment_author_tv);
         ImageView imgView = view.findViewById(R.id.review_page_fragment_img);
-        RatingBar rank = view.findViewById(R.id.review_page_fragment_rank_rb);
+        RatingBar rank = view.findViewById(R.id.reviewlistrow_rating_rb);
 //        Button editBtn = findViewById(R.id.student_details_edit_btn);
 
-        ReviewModel reviewModel = ReviewPageFragmentArgs.fromBundle(getArguments()).getReview();
+        Review review = ReviewPageFragmentArgs.fromBundle(getArguments()).getReview();
 
-        title.setText(reviewModel.title);
-        description.setText(reviewModel.description);
-        author.setText("By " + reviewModel.author);
-        rank.setRating(reviewModel.rating);
+        title.setText(review.title);
+        description.setText(review.description);
+        author.setText("By " + review.author);
+        rank.setRating((float) review.rating);
 
+        if (review.getImageUrl() != null && !review.getImageUrl().equals("")) {
+            Picasso.get().load(review.getImageUrl()).placeholder(R.drawable.avatar).into(imgView);
+        }else{
+            imgView.setImageResource(R.drawable.avatar);
+        }
 
         return view;
     }

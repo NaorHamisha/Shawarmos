@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,15 +14,16 @@ import android.view.ViewGroup;
 
 import com.example.shawarmos.R;
 import com.example.shawarmos.ShawarmaRecyclerAdapter;
-import com.example.shawarmos.models.ReviewModel;
+import com.example.shawarmos.models.Review;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
     ShawarmaRecyclerAdapter adapter;
-    List<ReviewModel> data;
+    List<Review> data;
     RecyclerView recyclerView;
 
     @SuppressLint("MissingInflatedId")
@@ -38,14 +37,8 @@ public class ProfileFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        data = Arrays.asList(
-                new ReviewModel("Naor","What the fuck"),
-                new ReviewModel("May koren","You hate her"),
-                new ReviewModel("Naor","What the fuck"),
-                new ReviewModel("May koren","You hate her"),
-                new ReviewModel("Naor","What the fuck"),
-                new ReviewModel("May koren","You hate her"),
-                new ReviewModel("Test","Fuck her"));
+        // TODO: take all user data
+        data = new LinkedList<>();
 
         adapter = new ShawarmaRecyclerAdapter(getLayoutInflater(), data);
         recyclerView.setAdapter(adapter);

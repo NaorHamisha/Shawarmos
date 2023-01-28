@@ -1,30 +1,34 @@
 package com.example.shawarmos;
 
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shawarmos.models.ReviewModel;
+import com.example.shawarmos.models.Review;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ShawarmaViewHolder extends RecyclerView.ViewHolder {
+    List<Review> data;
+
     TextView titleTv;
-    TextView descriptionTv;
-    List<ReviewModel> data;
+    TextView authorTv;
+    RatingBar ratingRb;
     ImageView avatarImage;
 
-    public ShawarmaViewHolder(@NonNull View itemView, ShawarmaRecyclerAdapter.OnItemClickListener listener, List<ReviewModel> data) {
+    public ShawarmaViewHolder(@NonNull View itemView, ShawarmaRecyclerAdapter.OnItemClickListener listener, List<Review> data) {
         super(itemView);
         this.data = data;
 
         titleTv = itemView.findViewById(R.id.reviewlistrow_name_tv);
-        descriptionTv = itemView.findViewById(R.id.reviewlistrow_id_tv);
+        authorTv = itemView.findViewById(R.id.reviewlistrow_author_tv);
         avatarImage = itemView.findViewById(R.id.reviewlistrow_avatar_img);
+        ratingRb = itemView.findViewById(R.id.reviewlistrow_rating_rb);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,8 +39,15 @@ public class ShawarmaViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void bind(ReviewModel rv, int pos) {
-        titleTv.setText(rv.title);
-        descriptionTv.setText(rv.description);
+    public void bind(Review review, int pos) {
+        titleTv.setText(review.title);
+        authorTv.setText("By " + review.author);
+        ratingRb.setRating((float)review.rating);
+
+        if (review.getImageUrl() != null && !review.getImageUrl().equals("")) {
+            Picasso.get().load(review.getImageUrl()).placeholder(R.drawable.avatar).into(avatarImage);
+        }else{
+            avatarImage.setImageResource(R.drawable.avatar);
+        }
     }
 }

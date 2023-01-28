@@ -3,14 +3,11 @@ package com.example.shawarmos;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shawarmos.models.ReviewModel;
+import com.example.shawarmos.models.Review;
 
 import java.util.List;
 
@@ -22,14 +19,14 @@ public class ShawarmaRecyclerAdapter extends RecyclerView.Adapter<ShawarmaViewHo
     }
 
     LayoutInflater inflater;
-    List<ReviewModel> data;
+    List<Review> data;
 
-    public void setData(List<ReviewModel> data) {
+    public void setData(List<Review> data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
-    public ShawarmaRecyclerAdapter(LayoutInflater inflater, List<ReviewModel> data) {
+    public ShawarmaRecyclerAdapter(LayoutInflater inflater, List<Review> data) {
         this.inflater = inflater;
         this.data = data;
     }
@@ -47,13 +44,16 @@ public class ShawarmaRecyclerAdapter extends RecyclerView.Adapter<ShawarmaViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ShawarmaViewHolder holder, int position) {
-        ReviewModel rv = data.get(position);
-        holder.bind(rv, position);
+        Review review = data.get(position);
+        holder.bind(review, position);
     }
 
     @Override
     public int getItemCount() {
-        if (data == null) return 0;
+        if (data == null) {
+            return 0;
+        }
+
         return data.size();
     }
 }
