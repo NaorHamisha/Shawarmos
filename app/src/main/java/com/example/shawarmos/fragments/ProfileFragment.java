@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.shawarmos.R;
 import com.example.shawarmos.ShawarmaRecyclerAdapter;
+import com.example.shawarmos.databinding.FragmentProfileBinding;
 import com.example.shawarmos.models.Review;
 
 import java.util.Arrays;
@@ -23,6 +24,8 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
 
     ShawarmaRecyclerAdapter adapter;
+    FragmentProfileBinding binding;
+
     List<Review> data;
     RecyclerView recyclerView;
 
@@ -32,6 +35,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
 
         recyclerView = view.findViewById(R.id.profile_fragment_my_reviews_rv);
         recyclerView.setHasFixedSize(true);

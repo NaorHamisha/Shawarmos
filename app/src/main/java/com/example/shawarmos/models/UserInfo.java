@@ -1,10 +1,9 @@
 package com.example.shawarmos.models;
 
-import java.util.List;
-
-public class UserModel {
+public class UserInfo {
     public String userId;
     public String userName;
     public String avatarUrl;
 
+    public static final String COLLECTION = "users-info";
 }

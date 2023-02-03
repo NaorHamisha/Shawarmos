@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.shawarmos.models.Review;
+import com.example.shawarmos.models.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,28 @@ public class Model {
     }
     private Model(){}
 
+    public void login(String username, String password, Listener<Boolean> listener) {
+        // TODO make the login to ask for the user info
+        firebaseModel.login(username, password, listener);
+    }
+
+    public void register(String username, String password, String imageUrl, Listener<Boolean> listener) {
+
+        // TODO after register i should save the user session in users collection in the firebase
+        firebaseModel.registerUser(username, password, listener);
+    }
+
+    public boolean isLogged() {
+        return firebaseModel.isLoggedIn();
+    }
 
 
-    public void logIn() {
+    public void logOut(Listener<Boolean> listener) {
 
+    }
+
+    public void updateCurrentUserInfo(UserInfo updatedUserInfo) {
+            // TODO save the new user info in the user
     }
 
     public void addReview(Review review, Listener<Void> listener) {
@@ -76,6 +95,13 @@ public class Model {
         }
 
         return reviewsList;
+    }
+
+    public LiveData<List<Review>> getCurrentUserReviews() {
+
+        // TODO: filter here all the review of the user
+
+        return null;
     }
 
     public interface Listener<T>{

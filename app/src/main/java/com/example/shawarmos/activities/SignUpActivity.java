@@ -20,19 +20,16 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        mEmail = findViewById(R.id.email);
-        mPassword = findViewById(R.id.password);
+        mEmail = findViewById(R.id.register_activty_username_et);
+        mPassword = findViewById(R.id.register_activity_password_et);
         mConfirmPassword = findViewById(R.id.confirm_password);
-        mSignUp = findViewById(R.id.sign_up_button);
+        mSignUp = findViewById(R.id.register_activiry_btn);
 
         mSignUp.setOnClickListener(view -> {
             String email = mEmail.getText().toString();
             String password = mPassword.getText().toString();
             String confirmPassword = mConfirmPassword.getText().toString();
 
-            // Implement sign-up logic here
-            // For example, check if the email and password fields are not empty and the password matches the confirm password
-            // Then, send a request to a server to create a new user
         });
     }
 }
