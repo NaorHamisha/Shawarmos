@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -27,6 +28,7 @@ import com.example.shawarmos.DAL.Model;
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentAddReviewBinding;
 import com.example.shawarmos.models.Review;
+import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
 
@@ -35,6 +37,8 @@ public class AddReviewFragment extends Fragment {
     private FragmentAddReviewBinding binding;
     private ActivityResultLauncher<Void> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
+    private Review review;
+    private String reviewUuid;
 
     private boolean isAvatarSelected = false;
 
@@ -81,7 +85,26 @@ public class AddReviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAddReviewBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+
+        review = AddReviewFragmentArgs.fromBundle(getArguments()).getReview();
+
+        reviewUuid = null;
+
+        if (review != null) {
+            reviewUuid = review.getReviewId();
+            binding.addReviewFragmentNameEt.setText(review.getTitle());
+            binding.addReviewFragmentDescriptionEt.setText(review.getDescription());
+            binding.addReviewFragmentRankRb.setRating((float) review.getRating());
+            if (review.getImageUrl() != null && !review.getImageUrl().equals("")) {
+                Picasso.get().load(review.getImageUrl()).placeholder(R.drawable.avatar).into(binding.addReviewFragmentImg);
+            }else{
+                binding.addReviewFragmentImg.setImageResource(R.drawable.avatar);
+            }
+            // TODO serialize here an image to the view
+        }
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle((reviewUuid == null) ? "Add new review" : "Edit Review");
+
 
         binding.addReviewFragmentSaveBtn.setOnClickListener(view1 -> {
 
@@ -89,8 +112,11 @@ public class AddReviewFragment extends Fragment {
             String description = binding.addReviewFragmentDescriptionEt.getText().toString();
             double rank = binding.addReviewFragmentRankRb.getRating();
 
-            UUID uuid = UUID.randomUUID();
-            Review review  = new Review(uuid.toString(), title, description, rank, "Naor Hamisha", "");
+            if (reviewUuid == null) {
+                reviewUuid = UUID.randomUUID().toString();
+            }
+
+            Review review = new Review(reviewUuid, title, description, rank, "Naor Hamisha", "");
 
             if (isAvatarSelected) {
                 binding.addReviewFragmentImg.setDrawingCacheEnabled(true);
@@ -112,7 +138,7 @@ public class AddReviewFragment extends Fragment {
             }
         });
 
-        binding.addReviewFragmentCancelBtn.setOnClickListener(view1 -> Navigation.findNavController(view1).popBackStack(R.id.shawarmaListFragment,false));
+        binding.addReviewFragmentCancelBtn.setOnClickListener(view1 -> Navigation.findNavController(view1).popBackStack(R.id.menu_mainFeedFragment,false));
 
         binding.addReviewFragmentCameraBtn.setOnClickListener(view1->{
             cameraLauncher.launch(null);
@@ -122,6 +148,6 @@ public class AddReviewFragment extends Fragment {
             galleryLauncher.launch("image/*");
         });
 
-        return view;
+        return binding.getRoot();
     }
 }

@@ -61,11 +61,24 @@
         android:layout_height="343dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="20dp"
         android:text=" a lot of text here its should be wriiten all the time beacuse i hate to talk about drugs and all that things check dfjsk ldfjlksdjflkdsjflj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reviewlistrow_rating_rb" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/review_page_fragment_edit_post_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:backgroundTint="@color/componentBackground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout >

@@ -1,18 +1,15 @@
 package com.example.shawarmos.DAL;
 
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
-import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.shawarmos.models.Review;
 import com.example.shawarmos.models.UserInfo;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -25,20 +22,19 @@ public class Model {
     private FirebaseModel firebaseModel = new FirebaseModel();
     private AppLocalDbRepository localDb = AppLocalDb.getAppDb();
 
-    public static Model instance(){
+    public static Model instance() {
         return _instance;
     }
-    private Model(){}
+
+    private Model() {}
 
     public void login(String username, String password, Listener<Boolean> listener) {
         // TODO make the login to ask for the user info
         firebaseModel.login(username, password, listener);
     }
 
-    public void register(String username, String password, String imageUrl, Listener<Boolean> listener) {
-
-        // TODO after register i should save the user session in users collection in the firebase
-        firebaseModel.registerUser(username, password, listener);
+    public void register(String email, String password, String username, String imageUrl, Listener<Boolean> listener) {
+        firebaseModel.registerUser(email, password, username, imageUrl, listener);
     }
 
     public boolean isLogged() {
@@ -46,8 +42,9 @@ public class Model {
     }
 
 
-    public void logOut(Listener<Boolean> listener) {
-
+    public void signOut(Listener<Boolean> listener) {
+        firebaseModel.signOutUser();
+        listener.onComplete(true);
     }
 
     public void updateCurrentUserInfo(UserInfo updatedUserInfo) {
@@ -56,7 +53,7 @@ public class Model {
 
     public void addReview(Review review, Listener<Void> listener) {
         firebaseModel.addReview(review, (Void)->{
-            refreshAllStudents();
+            refreshShawarmaList();
             listener.onComplete(null);
         });
     }
@@ -65,7 +62,7 @@ public class Model {
         firebaseModel.uploadImage(name, bitmap, listener);
     }
 
-    public void refreshAllStudents() {
+    public void refreshShawarmaList() {
         EventReviewsListLoadingState.setValue(LoadingState.LOADING);
         // get local last update
         Long localLastUpdate = Review.getLocalLastUpdate();
@@ -86,22 +83,36 @@ public class Model {
             EventReviewsListLoadingState.postValue(LoadingState.NOT_LOADING);
         }));
     }
+
     private LiveData<List<Review>> reviewsList;
 
     public LiveData<List<Review>> getAllReviews() {
         if(reviewsList == null){
             reviewsList = localDb.reviewDao().getAll();
-            refreshAllStudents();
+            refreshShawarmaList();
         }
 
         return reviewsList;
     }
 
     public LiveData<List<Review>> getCurrentUserReviews() {
-
         // TODO: filter here all the review of the user
 
-        return null;
+        LiveData<List<Review>> posts = getAllReviews();
+        List<Review> myPosts = new LinkedList<>();
+
+        MutableLiveData<List<Review>> postsToReturn = new MutableLiveData<>();
+        if (posts.getValue() != null) {
+            for(Review post : posts.getValue()){
+//                if(post.getAuthor().equals(userUid)){
+                    myPosts.add(post);
+                    break;
+//                }
+            }
+        }
+
+        postsToReturn.setValue(myPosts);
+        return postsToReturn;
     }
 
     public interface Listener<T>{

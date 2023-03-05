@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightGrey">#bbbd9b</color>
-    <color name="duskYellow">#cfd647</color>
+<!--    <color name="duskYellow">#cfd647</color>-->
+        <color name="duskYellow">#ff9933</color>
+    <color name="componentBackground">#ff9933</color>
+    <color name="fragmentBackground">#ffff99</color>
 
 </resources>

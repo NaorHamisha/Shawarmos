@@ -15,7 +15,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -36,7 +40,7 @@ public class FirebaseModel {
 
     private FirebaseUser currentUser;
 
-    FirebaseModel() {
+    public FirebaseModel() {
         firestoreDb = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(false)
@@ -72,17 +76,13 @@ public class FirebaseModel {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 boolean isSuccess = task.isSuccessful();
                 if (isSuccess) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG-AUTH", "signInWithEmail:success");
                     currentUser = mAuth.getCurrentUser();
-                    //startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.w("TAG-AUTH", "signInWithEmail:failure", task.getException());
-                    //Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                 }
 
-                String str = currentUser.getEmail();
+                String email = currentUser.getEmail();
                 Uri str2 = currentUser.getPhotoUrl();
 
                 listener.onComplete(isSuccess);
@@ -90,20 +90,30 @@ public class FirebaseModel {
         });
     }
 
-    public void registerUser(String username, String password, Model.Listener<Boolean> listener) {
+    public void registerUser(String email, String password, String username, String imageUrl, Model.Listener<Boolean> listener) {
         mAuth.createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "createUserWithEmail:success");
                             currentUser = mAuth.getCurrentUser();
-                            //startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(username)
+                                    .setPhotoUri(Uri.parse(imageUrl))
+                                    .build();
+                            currentUser.updateProfile(profileUpdates);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                            //Toast.makeText(RegisterActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
+                            // Authentication error
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                //Toast.makeText(RegisterActivity.this, "User with this email already exists.", Toast.LENGTH_SHORT).show();
+                            } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                               // Toast.makeText(RegisterActivity.this, "Invalid email address.", Toast.LENGTH_SHORT).show();
+                            } else if (task.getException() instanceof FirebaseAuthWeakPasswordException) {
+                                //Tost.makeText(RegisterActivity.this, "Weak password. Enter a stronger password.", Toast.LENGTH_SHORT).show();
+                            } else {
+                              //  Toast.makeText(RegisterActivity.this, "Unknown error. Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         listener.onComplete(task.isSuccessful());
@@ -153,8 +163,7 @@ public class FirebaseModel {
     }
 
     public boolean isLoggedIn() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String email = user.getEmail();
-        return (user != null);
+        currentUser = mAuth.getCurrentUser();
+        return (currentUser != null);
     }
 }

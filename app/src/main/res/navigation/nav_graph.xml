@@ -4,16 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     android:label="Shawarma Reviews"
-    app:startDestination="@id/shawarmaListFragment">
+    app:startDestination="@id/menu_mainFeedFragment">
 
     <fragment
-        android:id="@+id/shawarmaListFragment"
+        android:id="@+id/menu_mainFeedFragment"
         android:name="com.example.shawarmos.fragments.ShawarmaListFragment"
         android:label="Shawarmos"
         tools:layout="@layout/fragment_shawarma_list">
         <action
             android:id="@+id/action_shawarmaListFragment_to_reviewPageFragment"
             app:destination="@id/reviewPageFragment" />
+        <argument
+            android:name="isUserReviews"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_menu_mainFeedFragment_to_menu_addReviewFragment"
+            app:destination="@id/addReviewFragment" />
     </fragment>
 
     <fragment
@@ -24,19 +31,26 @@
         <argument
             android:name="review"
             app:argType="com.example.shawarmos.models.Review" />
+        <action
+            android:id="@+id/action_reviewPageFragment_to_addReviewFragment"
+            app:destination="@id/addReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addReviewFragment"
         android:name="com.example.shawarmos.fragments.AddReviewFragment"
         android:label="Add Review"
-        tools:layout="@layout/fragment_add_review" />
+        tools:layout="@layout/fragment_add_review" >
+        <argument
+            android:name="review"
+            app:argType="com.example.shawarmos.models.Review"
+            app:nullable="true" />
+    </fragment>
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/menu_profileFragment"
         android:name="com.example.shawarmos.fragments.ProfileFragment"
         android:label="My Profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_auth_nav_graph"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
+    <action
+        android:id="@+id/action_global_mainFeedFragment"
+        app:destination="@id/menu_mainFeedFragment" />
 </navigation>

@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
         NavigationUI.setupActionBarWithNavController(this, navController);
 
-
 //        binding = ActivityLoginBinding.inflate(getLayoutInflater());
 //
 //        binding.loginActivityBtn.setOnClickListener(view1-> {
@@ -37,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
 //            String password = binding.loginActivityPasswordEt.getText().toString();
 //
 //            Navigation.findNavController(view1).navigate(R.id.shawarmaListFragment);
-
 //            Model.instance().logIn(username, password, (unused) -> {
 //                Navigation.findNavController(view1).navigate(R.id.shawarmaListFragment);
 //            });
