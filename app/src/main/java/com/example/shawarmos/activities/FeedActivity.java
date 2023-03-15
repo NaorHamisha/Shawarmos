@@ -10,7 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavHost;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.shawarmos.DAL.AuthModel;
+import com.example.shawarmos.models.AuthModel;
 import com.example.shawarmos.R;
 import com.google.android.material.navigation.NavigationView;
 

@@ -5,6 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.shawarmos.entities.Meal;
+import com.example.shawarmos.entities.MealApi;
+import com.example.shawarmos.entities.MealApiResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MealModel {
 
     final public static MealModel instance = new MealModel();
+
     final String BASE_URL = "https://www.themealdb.com/";
 
     private Retrofit retrofit;

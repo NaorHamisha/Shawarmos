@@ -1,13 +1,14 @@
-package com.example.shawarmos.DAL.firebase;
+package com.example.shawarmos.models.firebase;
 
-import com.example.shawarmos.DAL.Interfaces.IEmptyOnCompleteListener;
-import com.example.shawarmos.DAL.Interfaces.IUserOnCompleteListener;
+import com.example.shawarmos.models.interfaces.IAuth;
+import com.example.shawarmos.models.listeners.IEmptyOnCompleteListener;
+import com.example.shawarmos.models.listeners.IUserOnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class FireBaseAuthentication {
+public class FireBaseAuthentication implements IAuth {
 
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 

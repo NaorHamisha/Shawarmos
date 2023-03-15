@@ -1,4 +1,4 @@
-package com.example.shawarmos.models;
+package com.example.shawarmos.entities;
 
 public class Meal {
     String strMeal;

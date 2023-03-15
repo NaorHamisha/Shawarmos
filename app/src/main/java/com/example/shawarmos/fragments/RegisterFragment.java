@@ -24,13 +24,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.shawarmos.DAL.AuthModel;
-import com.example.shawarmos.DAL.Model;
-import com.example.shawarmos.DAL.UserModel;
+import com.example.shawarmos.models.AuthModel;
+import com.example.shawarmos.models.UserModel;
 import com.example.shawarmos.R;
 import com.example.shawarmos.activities.FeedActivity;
 import com.example.shawarmos.databinding.FragmentRegisterBinding;
-import com.example.shawarmos.models.User;
+import com.example.shawarmos.entities.User;
 
 public class RegisterFragment extends Fragment {
 

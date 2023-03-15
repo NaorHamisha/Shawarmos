@@ -3,22 +3,17 @@ package com.example.shawarmos.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-import com.example.shawarmos.DAL.UserModel;
+import com.example.shawarmos.models.UserModel;
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentReviewPageBinding;
-import com.example.shawarmos.databinding.FragmentShawarmaListBinding;
-import com.example.shawarmos.models.Review;
+import com.example.shawarmos.entities.Review;
 import com.squareup.picasso.Picasso;
 
 public class ReviewPageFragment extends Fragment {

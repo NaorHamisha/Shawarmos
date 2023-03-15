@@ -1,13 +1,11 @@
 package com.example.shawarmos.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.shawarmos.DAL.AuthModel;
-import com.example.shawarmos.DAL.Model;
+import com.example.shawarmos.models.AuthModel;
 import com.example.shawarmos.R;
 
 public class MainActivity extends AppCompatActivity {

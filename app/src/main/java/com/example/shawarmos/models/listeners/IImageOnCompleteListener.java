@@ -1,4 +1,4 @@
-package com.example.shawarmos.DAL.Interfaces;
+package com.example.shawarmos.models.listeners;
 
 public interface IImageOnCompleteListener {
     void onComplete(String url);

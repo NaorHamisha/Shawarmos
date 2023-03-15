@@ -1,30 +1,21 @@
 package com.example.shawarmos.fragments;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.shawarmos.DAL.AuthModel;
-import com.example.shawarmos.DAL.Model;
-import com.example.shawarmos.R;
+import com.example.shawarmos.models.AuthModel;
 import com.example.shawarmos.activities.FeedActivity;
 import com.example.shawarmos.databinding.FragmentLoginBinding;
-import com.example.shawarmos.databinding.FragmentShawarmaListBinding;
-import com.google.android.material.snackbar.Snackbar;
 
 public class LoginFragment extends Fragment {
 

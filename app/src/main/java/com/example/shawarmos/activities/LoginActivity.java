@@ -3,20 +3,13 @@ package com.example.shawarmos.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.example.shawarmos.DAL.Model;
 import com.example.shawarmos.R;
-import com.example.shawarmos.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -1,13 +1,12 @@
-package com.example.shawarmos.DAL;
+package com.example.shawarmos.models.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.shawarmos.models.Review;
+import com.example.shawarmos.entities.Review;
 
 import java.util.List;
 @Dao
@@ -20,7 +19,4 @@ public interface ReviewDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Review... reviews);
-
-    @Delete
-    void delete(Review review);
 }

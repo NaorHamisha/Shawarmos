@@ -1,4 +1,4 @@
-package com.example.shawarmos.models;
+package com.example.shawarmos.entities;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

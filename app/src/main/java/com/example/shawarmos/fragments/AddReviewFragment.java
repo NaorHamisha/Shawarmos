@@ -24,11 +24,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shawarmos.DAL.Model;
-import com.example.shawarmos.DAL.UserModel;
+import com.example.shawarmos.models.PostModel;
+import com.example.shawarmos.models.UserModel;
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentAddReviewBinding;
-import com.example.shawarmos.models.Review;
+import com.example.shawarmos.entities.Review;
 import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
@@ -130,17 +130,17 @@ public class AddReviewFragment extends Fragment {
                     binding.addReviewFragmentImg.buildDrawingCache();
                     Bitmap bitmap = ((BitmapDrawable) binding.addReviewFragmentImg.getDrawable()).getBitmap();
 
-                    Model.instance().uploadImage(title, bitmap, url-> {
+                    PostModel.instance().uploadImage(title, bitmap, url-> {
                         if (url != null) {
                             newReview.setImageUrl(url);
                         }
-                        Model.instance().addReview(newReview, (unused) -> {
+                        PostModel.instance().addReview(newReview, () -> {
                             binding.addReviewFragmentProgressBar.setVisibility(View.GONE);
                             Navigation.findNavController(view1).navigate(AddReviewFragmentDirections.actionAddReviewFragmentToReviewPageFragment(newReview));
                         });
                     });
                 } else {
-                    Model.instance().addReview(newReview, (unused) -> {
+                    PostModel.instance().addReview(newReview, () -> {
                         binding.addReviewFragmentProgressBar.setVisibility(View.GONE);
                         Navigation.findNavController(view1).navigate(AddReviewFragmentDirections.actionAddReviewFragmentToReviewPageFragment(newReview));
                     });

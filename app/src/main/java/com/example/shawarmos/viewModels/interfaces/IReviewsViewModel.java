@@ -2,7 +2,7 @@ package com.example.shawarmos.viewModels.interfaces;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.shawarmos.models.Review;
+import com.example.shawarmos.entities.Review;
 
 import java.util.List;
 

@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shawarmos.DAL.UserModel;
-import com.example.shawarmos.models.Review;
+import com.example.shawarmos.models.UserModel;
+import com.example.shawarmos.entities.Review;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

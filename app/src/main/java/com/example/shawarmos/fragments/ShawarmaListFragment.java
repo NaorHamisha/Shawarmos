@@ -15,13 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shawarmos.DAL.Model;
+import com.example.shawarmos.models.PostModel;
 import com.example.shawarmos.viewModels.interfaces.IReviewsViewModel;
 import com.example.shawarmos.viewModels.MyReviewsViewModel;
 import com.example.shawarmos.viewModels.FeedReviewsFragmentViewModel;
 import com.example.shawarmos.ShawarmaRecyclerAdapter;
 import com.example.shawarmos.databinding.FragmentShawarmaListBinding;
-import com.example.shawarmos.models.Review;
+import com.example.shawarmos.entities.Review;
 
 public class ShawarmaListFragment extends Fragment {
 
@@ -59,8 +59,8 @@ public class ShawarmaListFragment extends Fragment {
             }
         });
 
-        Model.instance().EventReviewsListLoadingState.observe(getViewLifecycleOwner(),status->{
-            binding.swipeRefresh.setRefreshing(status == Model.LoadingState.LOADING);
+        PostModel.instance().EventReviewsListLoadingState.observe(getViewLifecycleOwner(), status->{
+            binding.swipeRefresh.setRefreshing(status == PostModel.LoadingState.LOADING);
         });
 
         binding.feedFragmentAddPostFab.setOnClickListener(view1 -> {
@@ -87,6 +87,6 @@ public class ShawarmaListFragment extends Fragment {
     }
 
     void reloadData() {
-        Model.instance().refreshShawarmaList();
+        PostModel.instance().refreshShawarmaList();
     }
 }

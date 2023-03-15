@@ -24,10 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shawarmos.DAL.UserModel;
+import com.example.shawarmos.models.UserModel;
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentEditProfileBinding;
-import com.example.shawarmos.models.User;
+import com.example.shawarmos.entities.User;
 import com.squareup.picasso.Picasso;
 
 
@@ -113,7 +113,6 @@ public class EditProfileFragment extends Fragment {
 
     private void updateUserDetails() {
         String userName = binding.editProfileFragmentUsernameEt.getText().toString();
-        //String email = binding.editProfileFragmentEmailEt.getText().toString();
         String email = user.getEmail();
         String imgUrl = user.getAvatarUrl();
         String id = user.getUserId();
@@ -129,7 +128,6 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void initializeProfileDetails() {
-       // binding.editProfileFragmentEmailEt.setText(user.getEmail());
         binding.editProfileFragmentUsernameEt.setText(user.getUserName());
 
         String imgUrl = user.getAvatarUrl();

@@ -1,14 +1,11 @@
-package com.example.shawarmos.DAL;
+package com.example.shawarmos.models;
 
-import com.example.shawarmos.DAL.Interfaces.IEmptyOnCompleteListener;
-import com.example.shawarmos.DAL.Interfaces.IUserOnCompleteListener;
-import com.example.shawarmos.DAL.firebase.FireBaseAuthentication;
+import com.example.shawarmos.models.listeners.IEmptyOnCompleteListener;
+import com.example.shawarmos.models.listeners.IUserOnCompleteListener;
 
 public class AuthModel extends BaseModel {
 
     private static final AuthModel _instance = new AuthModel();
-
-    private FireBaseAuthentication m_Auth = new FireBaseAuthentication();
 
     public static AuthModel instance() {
         return _instance;
@@ -17,23 +14,23 @@ public class AuthModel extends BaseModel {
     private AuthModel() {}
 
     public String getCurrentUserId() {
-        return m_Auth.getCurrentUserUID();
+        return auth.getCurrentUserUID();
     }
 
     public void login(String username, String password, IUserOnCompleteListener listener) {
-        m_Auth.login(username, password, listener);
+        auth.login(username, password, listener);
     }
 
     public void register(String email, String password, IUserOnCompleteListener listener) {
-        m_Auth.register(email, password, listener);
+        auth.register(email, password, listener);
     }
 
     public boolean isUserLoggedIn() {
-        return m_Auth.isLoggedIn();
+        return auth.isLoggedIn();
     }
 
     public void signOut(IEmptyOnCompleteListener listener) {
-        m_Auth.signOut(listener);
+        auth.signOut(listener);
     }
 
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shawarmos.models.Review;
+import com.example.shawarmos.entities.Review;
 
 import java.util.List;
 

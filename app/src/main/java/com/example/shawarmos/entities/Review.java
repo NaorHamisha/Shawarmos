@@ -1,4 +1,4 @@
-package com.example.shawarmos.models;
+package com.example.shawarmos.entities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FieldValue;
 
 @Entity
 public class Review implements Serializable {
+
 
     @PrimaryKey
     @NonNull

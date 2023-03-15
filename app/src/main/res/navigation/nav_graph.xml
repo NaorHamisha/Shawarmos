@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_review_page">
         <argument
             android:name="review"
-            app:argType="com.example.shawarmos.models.Review" />
+            app:argType="com.example.shawarmos.entities.Review" />
         <action
             android:id="@+id/action_reviewPageFragment_to_addReviewFragment"
             app:destination="@id/addReviewFragment" />
@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_add_review" >
         <argument
             android:name="review"
-            app:argType="com.example.shawarmos.models.Review"
+            app:argType="com.example.shawarmos.entities.Review"
             app:nullable="true" />
         <action
             android:id="@+id/action_addReviewFragment_to_reviewPageFragment"
@@ -70,7 +70,7 @@
         tools:layout="@layout/fragment_edit_profile" >
         <argument
             android:name="user"
-            app:argType="com.example.shawarmos.models.User" />
+            app:argType="com.example.shawarmos.entities.User" />
     </fragment>
     <fragment
         android:id="@+id/menu_diyRecipeFragment"

@@ -1,15 +1,16 @@
-package com.example.shawarmos.DAL.firebase;
+package com.example.shawarmos.models.firebase;
 
 import android.graphics.Bitmap;
 
-import com.example.shawarmos.DAL.Interfaces.IImageOnCompleteListener;
+import com.example.shawarmos.models.interfaces.IStorage;
+import com.example.shawarmos.models.listeners.IImageOnCompleteListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-public class FireBaseStorage {
+public class FireBaseStorage implements IStorage {
 
     private final FirebaseStorage storage = FirebaseStorage.getInstance();
 

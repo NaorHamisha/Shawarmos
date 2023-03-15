@@ -7,14 +7,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentDiyRecipeBinding;
-import com.example.shawarmos.models.Meal;
+import com.example.shawarmos.entities.Meal;
 import com.example.shawarmos.models.MealModel;
 import com.squareup.picasso.Picasso;
 
@@ -31,6 +30,7 @@ public class DiyRecipeFragment extends Fragment {
         // Inflate the layout for this fragment
         binding  = FragmentDiyRecipeBinding.inflate(inflater, container, false);
 
+        binding.diyRecipeFragmentProgressBar.setVisibility(View.VISIBLE);
         binding.diyRecipeFragmentInstructionsTv.setMovementMethod(new ScrollingMovementMethod());
 
         LiveData<List<Meal>> data = MealModel.instance.searchMealByName("shawarma");
@@ -39,6 +39,7 @@ public class DiyRecipeFragment extends Fragment {
                 list.forEach(item->{
                     initializePage(item);
                 });
+                binding.diyRecipeFragmentProgressBar.setVisibility(View.GONE);
             }
         });
 

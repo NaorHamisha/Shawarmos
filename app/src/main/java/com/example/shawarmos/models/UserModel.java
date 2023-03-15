@@ -1,19 +1,9 @@
-package com.example.shawarmos.DAL;
+package com.example.shawarmos.models;
 
-import static android.provider.Settings.System.getString;
-
-import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.example.shawarmos.DAL.Interfaces.IEmptyOnCompleteListener;
-import com.example.shawarmos.DAL.firebase.FireBaseDbCollections;
-import com.example.shawarmos.DAL.firebase.FireBaseStorage;
-import com.example.shawarmos.R;
-import com.example.shawarmos.models.User;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.util.List;
+import com.example.shawarmos.models.listeners.IEmptyOnCompleteListener;
+import com.example.shawarmos.entities.User;
 
 public class UserModel extends BaseModel {
 
@@ -40,7 +30,7 @@ public class UserModel extends BaseModel {
         }
     }
 
-    public void getCurrentUser(Model.Listener<User> callback) {
+    public void getCurrentUser(PostModel.Listener<User> callback) {
         String userId = AuthModel.instance().getCurrentUserId();
         dbCollections.getUserById(userId, callback);
     }
@@ -49,7 +39,7 @@ public class UserModel extends BaseModel {
         return AuthModel.instance().getCurrentUserId();
     }
 
-    public void getUserNameById(String authorId, Model.Listener<User> callback) {
+    public void getUserNameById(String authorId, PostModel.Listener<User> callback) {
          dbCollections.getUserById(authorId, callback);
     }
 
