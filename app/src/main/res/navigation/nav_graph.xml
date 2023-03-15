@@ -44,13 +44,37 @@
             android:name="review"
             app:argType="com.example.shawarmos.models.Review"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_addReviewFragment_to_reviewPageFragment"
+            app:destination="@id/reviewPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/menu_profileFragment"
         android:name="com.example.shawarmos.fragments.ProfileFragment"
         android:label="My Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_menu_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_mainFeedFragment"
         app:destination="@id/menu_mainFeedFragment" />
+    <action
+        android:id="@+id/action_global_diyRecipeFragment"
+        app:destination="@id/menu_diyRecipeFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.shawarmos.fragments.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <argument
+            android:name="user"
+            app:argType="com.example.shawarmos.models.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_diyRecipeFragment"
+        android:name="com.example.shawarmos.fragments.DiyRecipeFragment"
+        android:label="fragment_diy_recipe"
+        tools:layout="@layout/fragment_diy_recipe" />
 </navigation>

@@ -10,32 +10,26 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavHost;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.shawarmos.DAL.AuthModel;
 import com.example.shawarmos.R;
 import com.google.android.material.navigation.NavigationView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class FeedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private NavController navController;
-    DrawerLayout drawerLayout;
-
-    ImageView profileImgImv;
-    TextView displayNameTv;
-    TextView emailTv;
-
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-
-       // viewModel = new ViewModelProvider(this).get(BaseActivityViewModel.class);
 
         NavHost navHost = (NavHost) getSupportFragmentManager().findFragmentById(R.id.base_navhost);
         navController = navHost.getNavController();
@@ -52,14 +46,6 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
-                initUser();
-
-                profileImgImv = findViewById(R.id.menu_img_imv);
-                displayNameTv = findViewById(R.id.menu_display_name_tv);
-                emailTv = findViewById(R.id.menu_email_tv);
-
-                setUserDetails();
             }
 
             @Override
@@ -77,41 +63,6 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
 
         toggle.syncState();
-
-
-//        NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.main_navhost);
-//        navController = navHostFragment.getNavController();
-//        NavigationUI.setupActionBarWithNavController(this,navController);
-//
-//        BottomNavigationView navView = findViewById(R.id.main_bottomNavigationView);
-//        NavigationUI.setupWithNavController(navView, navController);
-
-        // For external api
-//        LiveData<List<Meal>> data = MealModel.instance.searchMealByName("shawarma");
-//        data.observe(this, list->{
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                list.forEach(item->{
-//                    Log.d("Tag", "got meal: " + item.getStrMealThumb());
-//                });
-//            }
-//        });
-
-
-    }
-    private void initUser() {
-     //   user = viewModel.getUserById(Model.instance.getCurrentUserUID()).getValue();
-    }
-
-    private void setUserDetails() {
-       // if (user == null) return;
-
-//        displayNameTv.setText(user.getDisplayName());
-//        emailTv.setText(user.getEmail());
-//        if(user.getImg() != null){
-//            Picasso.get().load(user.getImg()).into(profileImgImv);
-//        } else {
-//            profileImgImv.setImageResource(R.mipmap.ic_launcher_round);
-//        }
     }
 
     @Override
@@ -139,8 +90,13 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
                 args.putBoolean("isUserReviews", true);
                 navController.navigate(R.id.action_global_mainFeedFragment, args);
                 break;
+            case R.id.menu_diyRecipeFragment:
+                navController.navigate(R.id.action_global_diyRecipeFragment);
+                break;
             case R.id.menu_sign_out:
-                // Do sign out
+                AuthModel.instance().signOut(() -> {
+                        redirectToMainActivity();
+                });
                 break;
             default:
                 NavigationUI.onNavDestinationSelected(item, navController);
@@ -149,5 +105,11 @@ public class FeedActivity extends AppCompatActivity implements NavigationView.On
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void redirectToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

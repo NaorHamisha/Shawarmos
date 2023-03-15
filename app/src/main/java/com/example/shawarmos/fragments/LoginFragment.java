@@ -1,5 +1,7 @@
 package com.example.shawarmos.fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,16 +12,19 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.shawarmos.DAL.AuthModel;
 import com.example.shawarmos.DAL.Model;
 import com.example.shawarmos.R;
 import com.example.shawarmos.activities.FeedActivity;
 import com.example.shawarmos.databinding.FragmentLoginBinding;
 import com.example.shawarmos.databinding.FragmentShawarmaListBinding;
-
+import com.google.android.material.snackbar.Snackbar;
 
 public class LoginFragment extends Fragment {
 
@@ -28,7 +33,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -37,22 +41,25 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        binding.loginFragmentProgressBar.setVisibility(View.GONE);
 
         binding.loginFragmentBtn.setOnClickListener(view1 -> {
-            String email = binding.loginFragmentUsernameEt.getText().toString();
+            String email = binding.loginFragmentEmailEt.getText().toString();
             String password = binding.loginFragmentPasswordEt.getText().toString();
 
             if (!isFormValid(email, password)) {
                 return;
             }
 
-            Model.instance().login(email, password, (Boolean isConnected) -> {
-                    if (isConnected) {
+            binding.loginFragmentProgressBar.setVisibility(View.VISIBLE);
+
+            AuthModel.instance().login(email, password, (id, ex) -> {
+                    if (id != null) {
                         redirectToFeedActivity();
-                        // TODO:  Clear here the back button stack
                     } else {
-                        // TODO: Check here if the user name or password is incorrect
-                        // TODO: Dialog of password or username is incorrect
+                        Toast.makeText(getContext(), "Authentication failed: " + ex.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                        binding.loginFragmentProgressBar.setVisibility(View.GONE);
                     }
             });
         });
@@ -69,7 +76,7 @@ public class LoginFragment extends Fragment {
         boolean isValid = true;
 
         if (email.isEmpty()) {
-            binding.loginFragmentUsernameEt.setError("Please enter email address");
+            binding.loginFragmentEmailEt.setError("Please enter email address");
             isValid = false;
         }
 

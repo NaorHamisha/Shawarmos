@@ -6,21 +6,25 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.shawarmos.DAL.firebase.FireBaseAuthentication;
 import com.example.shawarmos.models.Review;
-import com.example.shawarmos.models.UserInfo;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class Model {
+public class Model extends BaseModel {
 
     private static final Model _instance = new Model();
 
-    private Executor executor = Executors.newSingleThreadExecutor();
+   // private Executor executor = Executors.newSingleThreadExecutor();
     private FirebaseModel firebaseModel = new FirebaseModel();
     private AppLocalDbRepository localDb = AppLocalDb.getAppDb();
+
+    private LiveData<List<Review>> reviewsList;
+    private LiveData<List<Review>> userReviewsList;
+
 
     public static Model instance() {
         return _instance;
@@ -28,28 +32,22 @@ public class Model {
 
     private Model() {}
 
-    public void login(String username, String password, Listener<Boolean> listener) {
-        // TODO make the login to ask for the user info
-        firebaseModel.login(username, password, listener);
-    }
-
-    public void register(String email, String password, String username, String imageUrl, Listener<Boolean> listener) {
-        firebaseModel.registerUser(email, password, username, imageUrl, listener);
-    }
-
-    public boolean isLogged() {
-        return firebaseModel.isLoggedIn();
-    }
-
-
-    public void signOut(Listener<Boolean> listener) {
-        firebaseModel.signOutUser();
-        listener.onComplete(true);
-    }
-
-    public void updateCurrentUserInfo(UserInfo updatedUserInfo) {
-            // TODO save the new user info in the user
-    }
+//    public void login(String username, String password, Listener<Boolean> listener) {
+//        firebaseModel.login(username, password, listener);
+//    }
+//
+//    public void register(String email, String password, String username, String imageUrl, Listener<Boolean> listener) {
+//        firebaseModel.registerUser(email, password, username, imageUrl, listener);
+//    }
+//
+//    public boolean isLogged() {
+//        return firebaseModel.isLoggedIn();
+//    }
+//
+//    public void signOut(Listener<Boolean> listener) {
+//        firebaseModel.signOutUser();
+//        listener.onComplete(true);
+//    }
 
     public void addReview(Review review, Listener<Void> listener) {
         firebaseModel.addReview(review, (Void)->{
@@ -84,7 +82,6 @@ public class Model {
         }));
     }
 
-    private LiveData<List<Review>> reviewsList;
 
     public LiveData<List<Review>> getAllReviews() {
         if(reviewsList == null){
@@ -95,25 +92,47 @@ public class Model {
         return reviewsList;
     }
 
-    public LiveData<List<Review>> getCurrentUserReviews() {
-        // TODO: filter here all the review of the user
-
-        LiveData<List<Review>> posts = getAllReviews();
-        List<Review> myPosts = new LinkedList<>();
-
+    public LiveData<List<Review>> getCurrentUserReviews(String username) {
         MutableLiveData<List<Review>> postsToReturn = new MutableLiveData<>();
-        if (posts.getValue() != null) {
-            for(Review post : posts.getValue()){
-//                if(post.getAuthor().equals(userUid)){
-                    myPosts.add(post);
-                    break;
-//                }
-            }
-        }
+        LiveData<List<Review>> myReviews = localDb.reviewDao().getAllReviewsByAuthor(username);
+        refreshShawarmaList();
 
-        postsToReturn.setValue(myPosts);
+        postsToReturn.setValue(myReviews.getValue());
+
         return postsToReturn;
     }
+
+    public LiveData<List<Review>> getCurrentUSerAllReviews() {
+        String id = UserModel.instance().getCurrentUserId();
+        if(userReviewsList == null){
+            userReviewsList = localDb.reviewDao().getAllReviewsByAuthor(id);
+            refreshShawarmaList();
+        }
+
+        return userReviewsList;
+    }
+
+//    public LiveData<List<Review>> getCurrentUserReviews2() {
+//        LiveData<List<Review>> posts = getAllReviews();
+//        List<Review> myPosts = new LinkedList<>();
+//        MutableLiveData<List<Review>> postsToReturn = new MutableLiveData<>();
+//
+//        UserModel.instance().getCurrentUser(user -> {
+//            String userId = user.getUserName();
+//            if (posts.getValue() != null) {
+//                for(Review post : posts.getValue()){
+//                    if(post.getAuthor().equals(userId)){
+//                        myPosts.add(post);
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            postsToReturn.setValue(myPosts);
+//
+//        });
+//        return postsToReturn;
+//    }
 
     public interface Listener<T>{
         void onComplete(T data);

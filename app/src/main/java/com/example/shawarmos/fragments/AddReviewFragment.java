@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.shawarmos.DAL.Model;
+import com.example.shawarmos.DAL.UserModel;
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentAddReviewBinding;
 import com.example.shawarmos.models.Review;
@@ -38,7 +39,7 @@ public class AddReviewFragment extends Fragment {
     private ActivityResultLauncher<Void> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
     private Review review;
-    private String reviewUuid;
+    private String reviewUid;
 
     private boolean isAvatarSelected = false;
 
@@ -88,54 +89,63 @@ public class AddReviewFragment extends Fragment {
 
         review = AddReviewFragmentArgs.fromBundle(getArguments()).getReview();
 
-        reviewUuid = null;
+        binding.addReviewFragmentProgressBar.setVisibility(View.GONE);
+
+        reviewUid = null;
 
         if (review != null) {
-            reviewUuid = review.getReviewId();
+            reviewUid = review.getReviewId();
             binding.addReviewFragmentNameEt.setText(review.getTitle());
             binding.addReviewFragmentDescriptionEt.setText(review.getDescription());
             binding.addReviewFragmentRankRb.setRating((float) review.getRating());
             if (review.getImageUrl() != null && !review.getImageUrl().equals("")) {
-                Picasso.get().load(review.getImageUrl()).placeholder(R.drawable.avatar).into(binding.addReviewFragmentImg);
-            }else{
-                binding.addReviewFragmentImg.setImageResource(R.drawable.avatar);
+                Picasso.get().load(review.getImageUrl()).placeholder(R.drawable.logo).into(binding.addReviewFragmentImg);
+            } else {
+                binding.addReviewFragmentImg.setImageResource(R.drawable.logo);
             }
-            // TODO serialize here an image to the view
         }
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle((reviewUuid == null) ? "Add new review" : "Edit Review");
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle((reviewUid == null) ? "Add new review" : "Edit Review");
 
         binding.addReviewFragmentSaveBtn.setOnClickListener(view1 -> {
+            binding.addReviewFragmentProgressBar.setVisibility(View.VISIBLE);
 
             String title = binding.addReviewFragmentNameEt.getText().toString();
             String description = binding.addReviewFragmentDescriptionEt.getText().toString();
             double rank = binding.addReviewFragmentRankRb.getRating();
 
-            if (reviewUuid == null) {
-                reviewUuid = UUID.randomUUID().toString();
+            if (reviewUid == null) {
+                reviewUid = UUID.randomUUID().toString();
             }
 
-            Review review = new Review(reviewUuid, title, description, rank, "Naor Hamisha", "");
+            UserModel.instance().getCurrentUser(user -> {
+                String imgUrl = "";
+                if (review != null) {
+                    imgUrl = review.getImageUrl();
+                }
 
-            if (isAvatarSelected) {
-                binding.addReviewFragmentImg.setDrawingCacheEnabled(true);
-                binding.addReviewFragmentImg.buildDrawingCache();
-                Bitmap bitmap = ((BitmapDrawable) binding.addReviewFragmentImg.getDrawable()).getBitmap();
+                Review newReview = new Review(reviewUid, title, description, rank, user.getUserId(), imgUrl);
+                if (isAvatarSelected) {
+                    binding.addReviewFragmentImg.setDrawingCacheEnabled(true);
+                    binding.addReviewFragmentImg.buildDrawingCache();
+                    Bitmap bitmap = ((BitmapDrawable) binding.addReviewFragmentImg.getDrawable()).getBitmap();
 
-                Model.instance().uploadImage(title, bitmap, url->{
-                    if (url != null){
-                        review.setImageUrl(url);
-                    }
-                    Model.instance().addReview(review, (unused) -> {
-                        Navigation.findNavController(view1).popBackStack();
+                    Model.instance().uploadImage(title, bitmap, url-> {
+                        if (url != null) {
+                            newReview.setImageUrl(url);
+                        }
+                        Model.instance().addReview(newReview, (unused) -> {
+                            binding.addReviewFragmentProgressBar.setVisibility(View.GONE);
+                            Navigation.findNavController(view1).navigate(AddReviewFragmentDirections.actionAddReviewFragmentToReviewPageFragment(newReview));
+                        });
                     });
-                });
-            } else {
-                Model.instance().addReview(review, (unused) -> {
-                    Navigation.findNavController(view1).popBackStack();
-                });
-            }
+                } else {
+                    Model.instance().addReview(newReview, (unused) -> {
+                        binding.addReviewFragmentProgressBar.setVisibility(View.GONE);
+                        Navigation.findNavController(view1).navigate(AddReviewFragmentDirections.actionAddReviewFragmentToReviewPageFragment(newReview));
+                    });
+                }
+            });
         });
 
         binding.addReviewFragmentCancelBtn.setOnClickListener(view1 -> Navigation.findNavController(view1).popBackStack(R.id.menu_mainFeedFragment,false));

@@ -1,4 +1,4 @@
-package com.example.shawarmos.DAL;
+package com.example.shawarmos.DAL.firebase;
 
 import com.example.shawarmos.DAL.Interfaces.IEmptyOnCompleteListener;
 import com.example.shawarmos.DAL.Interfaces.IUserOnCompleteListener;
@@ -7,25 +7,24 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Authentication {
+public class FireBaseAuthentication {
 
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser firebaseUser;
 
-    public Authentication() {}
+    public FireBaseAuthentication() {}
 
     public String getCurrentUserUID() {
 
         return firebaseAuth.getUid();
     }
 
-    public boolean isUserSignedIn() {
+    public boolean isLoggedIn() {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         return currentUser != null;
     }
 
-    public void signIn(String email, String password, IUserOnCompleteListener listener) {
+    public void login(String email, String password, IUserOnCompleteListener listener) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> onAuthenticationComplete(task, listener));
     }
@@ -43,6 +42,7 @@ public class Authentication {
     private void onAuthenticationComplete(Task<AuthResult> task, IUserOnCompleteListener listener) {
         FirebaseUser user;
         Exception ex = null;
+        String userId = null;
 
         if (task.isSuccessful()) {
             user = firebaseAuth.getCurrentUser();
@@ -51,6 +51,8 @@ public class Authentication {
             ex = task.getException();
         }
 
-        listener.onComplete(user, ex);
+        userId = (user != null) ? user.getUid() : null;
+
+        listener.onComplete(userId, ex);
     }
 }

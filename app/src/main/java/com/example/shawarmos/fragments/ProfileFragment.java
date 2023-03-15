@@ -1,38 +1,50 @@
 package com.example.shawarmos.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.shawarmos.DAL.Model;
+import com.example.shawarmos.DAL.UserModel;
 import com.example.shawarmos.R;
 import com.example.shawarmos.ShawarmaRecyclerAdapter;
 import com.example.shawarmos.activities.LoginActivity;
 import com.example.shawarmos.databinding.FragmentProfileBinding;
 import com.example.shawarmos.models.Review;
+import com.example.shawarmos.models.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
-    ShawarmaRecyclerAdapter adapter;
     FragmentProfileBinding binding;
+    private User currentUser;
 
-    List<Review> data;
-    RecyclerView recyclerView;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        initializeUserDetails();
+    }
 
-//    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,42 +52,31 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.profileFragmentSignOutBtn.setOnClickListener(view1 -> {
-            Model.instance().signOut(new Model.Listener<Boolean>() {
-                @Override
-                public void onComplete(Boolean isLoggedOutSuccessfully) {
-                    if (isLoggedOutSuccessfully) {
-                        redirectToLoginActivity();
-                    }
-                }
-            });
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Profile");
+
+        binding.profileFragmentEditUserFab.setOnClickListener(view1 -> {
+            Navigation.findNavController(view1).navigate(ProfileFragmentDirections.actionMenuProfileFragmentToEditProfileFragment(currentUser));
         });
 
-//        recyclerView = view.findViewById(R.id.profile_fragment_my_reviews_rv);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//        // TODO: Add progress bar
-//        // TODO: take all user data
-//        data = new LinkedList<>();
-//
-//        adapter = new ShawarmaRecyclerAdapter(getLayoutInflater(), data);
-//        recyclerView.setAdapter(adapter);
-//
-//        adapter.setOnItemClickListener(new ShawarmaRecyclerAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int pos) {
-//                Log.d("TAG", "Row was clicked " + pos);
-////                ReviewModel review = viewModel.getData().get(pos);
-//            }
-//        });
+        initializeUserDetails();
 
         return view;
     }
 
-    private void redirectToLoginActivity() {
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
+    private void initializeUserDetails() {
+        UserModel.instance().getCurrentUser(user -> {
+            this.currentUser = user;
+
+            binding.profileFragmentUserNameTv.setText(user.getUserName());
+            binding.profileFragmentEmailTv.setText(user.getEmail());
+
+            if (!Objects.equals(user.getAvatarUrl(), ""))
+            {
+                Picasso.get().load(user.getAvatarUrl()).placeholder(R.drawable.avatar).into(binding.profileFragmentImg);
+            } else {
+                Picasso.get().load((R.drawable.avatar)).into(binding.profileFragmentImg);
+            }
+        });
     }
+
 }

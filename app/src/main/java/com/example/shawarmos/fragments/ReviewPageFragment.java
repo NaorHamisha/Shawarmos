@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.shawarmos.DAL.UserModel;
 import com.example.shawarmos.R;
 import com.example.shawarmos.databinding.FragmentReviewPageBinding;
 import com.example.shawarmos.databinding.FragmentShawarmaListBinding;
 import com.example.shawarmos.models.Review;
 import com.squareup.picasso.Picasso;
-
 
 public class ReviewPageFragment extends Fragment {
 
@@ -33,8 +33,7 @@ public class ReviewPageFragment extends Fragment {
 
         Review review = ReviewPageFragmentArgs.fromBundle(getArguments()).getReview();
 
-        // TODO change it to a real condition
-        Boolean isEditable = true;
+        Boolean isEditable = (review.author.equals(UserModel.instance().getCurrentUserId()));
 
         binding.reviewPageFragmentEditPostFab.setVisibility(isEditable ? View.VISIBLE : View.GONE);
 
@@ -45,7 +44,9 @@ public class ReviewPageFragment extends Fragment {
 
         binding.reviewPageFragmentTitleTv.setText(review.title);
         binding.reviewPageFragmentDescriptionTv.setText(review.description);
-        binding.reviewPageFragmentAuthorTv.setText("By " + review.author);
+        UserModel.instance().getUserNameById(review.author, user -> {
+            binding.reviewPageFragmentAuthorTv.setText("By " + user.getUserName());
+        });
         binding.reviewlistrowRatingRb.setRating((float) review.rating);
 
         if (review.getImageUrl() != null && !review.getImageUrl().equals("")) {

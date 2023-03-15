@@ -7,12 +7,12 @@ import androidx.room.RoomDatabase;
 import com.example.shawarmos.MyApplication;
 import com.example.shawarmos.models.Review;
 
-@Database(entities = {Review.class}, version = 100)
+@Database(entities = {Review.class}, version = 1000)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract ReviewDao reviewDao();
 }
 
-public class AppLocalDb{
+public class AppLocalDb {
     static public AppLocalDbRepository getAppDb() {
 
         return Room.databaseBuilder(MyApplication.getMyContext(),

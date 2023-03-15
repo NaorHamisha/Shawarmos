@@ -40,6 +40,15 @@ public class Review implements Serializable {
 
     public Review() {}
 
+    public Review(String reviewId, String title, String description, double rating, String author) {
+        this.reviewId = reviewId;
+        this.title = title;
+        this.description = description;
+        this.rating = rating;
+        this.author = author;
+        this.imageUrl = "";
+    }
+
     public Review(String reviewId, String title, String description, double rating, String author, String imageUrl) {
         this.reviewId = reviewId;
         this.title = title;

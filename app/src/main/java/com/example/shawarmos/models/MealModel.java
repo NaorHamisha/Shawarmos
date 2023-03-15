@@ -20,8 +20,9 @@ public class MealModel {
 
     final public static MealModel instance = new MealModel();
     final String BASE_URL = "https://www.themealdb.com/";
-    Retrofit retrofit;
-    MealApi mealApi;
+
+    private Retrofit retrofit;
+    private MealApi mealApi;
 
     private MealModel() {
         Gson gson = new GsonBuilder()

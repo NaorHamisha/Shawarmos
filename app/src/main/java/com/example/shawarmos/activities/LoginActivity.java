@@ -1,5 +1,6 @@
 package com.example.shawarmos.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -8,6 +9,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,19 +30,21 @@ public class LoginActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.auth_nav_host);
         navController = navHostFragment.getNavController();
-        NavigationUI.setupActionBarWithNavController(this, navController);
 
-//        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-//
-//        binding.loginActivityBtn.setOnClickListener(view1-> {
-//            String username = binding.loginActivityUsernameEt.getText().toString();
-//            String password = binding.loginActivityPasswordEt.getText().toString();
-//
-//            Navigation.findNavController(view1).navigate(R.id.shawarmaListFragment);
-//            Model.instance().logIn(username, password, (unused) -> {
-//                Navigation.findNavController(view1).navigate(R.id.shawarmaListFragment);
-//            });
-  //      });
+        NavigationUI.setupActionBarWithNavController(this, navController);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(super.onOptionsItemSelected(item)) return true;
+
+        if (item.getItemId() == android.R.id.home) {
+            navController.navigateUp();
+            return true;
+        } else {
+            NavigationUI.onNavDestinationSelected(item, navController);
+            return false;
+        }
     }
 
 }

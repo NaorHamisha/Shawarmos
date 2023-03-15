@@ -88,6 +88,5 @@ public class ShawarmaListFragment extends Fragment {
 
     void reloadData() {
         Model.instance().refreshShawarmaList();
-        // TODO check if i should refresh the list even if its only my post
     }
 }

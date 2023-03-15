@@ -8,70 +8,78 @@
 
     <ImageView
         android:id="@+id/profile_fragment_img"
-        android:layout_width="180dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/avatar"
+        app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/profile_fragment_user_name_tv"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center|center_horizontal"
-        android:text="Hubgry boy"
+        android:layout_marginTop="48dp"
+        android:textAlignment="center"
+        android:textColor="@color/componentBackground"
+        android:textSize="34sp"
+        app:layout_constraintTop_toBottomOf="@+id/profile_fragment_img"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/profile_fragment_user_name_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="User Name"
+        android:textAlignment="center"
+        android:textColor="#7E7979"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_fragment_img" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_fragment_user_name_tv" />
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/profile_fragment_my_reviews_rv"-->
-<!--        android:layout_width="409dp"-->
-<!--        android:layout_height="420dp"-->
-<!--        android:layout_marginStart="1dp"-->
-<!--        android:layout_marginTop="15dp"-->
-<!--        android:layout_marginEnd="1dp"-->
-<!--        android:foregroundGravity="center"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/profile_fragment_user_name_tv" />-->
 
-    <ImageButton
-        android:id="@+id/profile_fragment_edit_profile_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:src="@android:drawable/stat_sys_phone_call_forward"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/profile_fragment_sign_out_btn"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/profile_fragment_email_tv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="5dp"
-        android:src="@android:drawable/arrow_up_float"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAlignment="center"
+        android:textColor="@color/componentBackground"
+        android:textSize="34sp"
+        app:layout_constraintTop_toBottomOf="@+id/profile_fragment_user_name_title_tv"
+        tools:layout_editor_absoluteX="0dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/profile_fragment_my_posts_btn"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="132dp"
-        android:text="My posts"
-        android:background="@color/componentBackground"
-        app:layout_constraintBottom_toTopOf="@+id/profile_fragment_user_name_tv"
-        app:layout_constraintEnd_toStartOf="@+id/profile_fragment_img"
-        app:layout_constraintHorizontal_bias="1.0"
+    <TextView
+        android:id="@+id/profile_fragment_email_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textAlignment="center"
+        android:textColor="#7E7979"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_fragment_email_tv" />
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/profile_fragment_edit_user_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:backgroundTint="@color/componentBackground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

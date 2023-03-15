@@ -50,11 +50,12 @@
 
             <ImageView
                 android:id="@+id/add_review_fragment_img"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="180dp"
                 android:layout_marginTop="8dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/avatar" />
+                app:srcCompat="@drawable/logo" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_review_fragment_search_img_btn"
@@ -127,5 +128,16 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ProgressBar
+        android:id="@+id/add_review_fragment_progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:indeterminateTint="@color/componentBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

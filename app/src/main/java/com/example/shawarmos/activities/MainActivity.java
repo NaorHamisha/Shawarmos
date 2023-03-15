@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.shawarmos.DAL.AuthModel;
 import com.example.shawarmos.DAL.Model;
 import com.example.shawarmos.R;
 
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (Model.instance().isLogged()) {
+        if (AuthModel.instance().isUserLoggedIn()) {
             redirectToFeedActivity();
         } else {
             redirectToLoginActivity();

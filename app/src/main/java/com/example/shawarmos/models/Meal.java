@@ -5,6 +5,7 @@ public class Meal {
     String strArea;
     String strMealThumb;
     String strInstructions;
+    String strCategory;
 
     public String getStrMeal() {
         return strMeal;
@@ -36,5 +37,13 @@ public class Meal {
 
     public void setStrInstructions(String strInstructions) {
         this.strInstructions = strInstructions;
+    }
+
+    public String getStrCategory() {
+        return strCategory;
+    }
+
+    public void setStrCategory(String strCategory) {
+        this.strCategory = strCategory;
     }
 }

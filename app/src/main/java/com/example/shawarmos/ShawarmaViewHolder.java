@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shawarmos.DAL.UserModel;
 import com.example.shawarmos.models.Review;
 import com.squareup.picasso.Picasso;
 
@@ -41,13 +42,17 @@ public class ShawarmaViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Review review, int pos) {
         titleTv.setText(review.title);
-        authorTv.setText("By " + review.author);
+
+        UserModel.instance().getUserNameById(review.author, user -> {
+            authorTv.setText("By " + user.getUserName());
+        });
+
         ratingRb.setRating((float)review.rating);
 
         if (review.getImageUrl() != null && !review.getImageUrl().equals("")) {
-            Picasso.get().load(review.getImageUrl()).placeholder(R.drawable.avatar).into(avatarImage);
+            Picasso.get().load(review.getImageUrl()).placeholder(R.drawable.logo).into(avatarImage);
         }else{
-            avatarImage.setImageResource(R.drawable.avatar);
+            avatarImage.setImageResource(R.drawable.logo);
         }
     }
 }
